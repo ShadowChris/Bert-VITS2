@@ -6,11 +6,19 @@ from tqdm import tqdm
 from text import cleaned_text_to_sequence, get_bert
 import argparse
 import torch.multiprocessing as mp
+import sys
 
 
 def process_line(line):
     rank = mp.current_process()._identity
     rank = rank[0] if len(rank) > 0 else 0
+
+    # 在mac系统需要使用mps
+    device = "cpu"
+    if sys.platform == "darwin" and torch.backends.mps.is_available():
+        device = "mps"
+    
+
     if torch.cuda.is_available():
         gpu_id = rank % torch.cuda.device_count()
         device = torch.device(f"cuda:{gpu_id}")
@@ -42,7 +50,7 @@ def process_line(line):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-c", "--config", type=str, default="configs/config.json")
-    parser.add_argument("--num_processes", type=int, default=2)
+    parser.add_argument("--num_processes", type=int, default=4)
     args = parser.parse_args()
     config_path = args.config
     hps = utils.get_hparams_from_file(config_path)

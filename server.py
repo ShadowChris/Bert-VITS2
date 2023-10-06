@@ -56,7 +56,7 @@ def infer(text, sdp_ratio, noise_scale, noise_scale_w, length_scale, sid, langua
         tones = tones.to(dev).unsqueeze(0)
         lang_ids = lang_ids.to(dev).unsqueeze(0)
         bert = bert.to(dev).unsqueeze(0)
-        ja_bert = ja_bert.to(device).unsqueeze(0)
+        ja_bert = ja_bert.to(dev).unsqueeze(0)
         x_tst_lengths = torch.LongTensor([phones.size(0)]).to(dev)
         speakers = torch.LongTensor([hps.data.spk2id[sid]]).to(dev)
         audio = (
