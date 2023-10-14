@@ -120,12 +120,12 @@ def tts_fn(text, speaker, sdp_ratio, noise_scale, noise_scale_w, length_scale, l
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "-m", "--model", default="./models/genshin/G_78000.pth", help="path of your model"
+        "-m", "--model", default="./logs/Yukong_zh/G_8000.pth", help="path of your model"
     )
     parser.add_argument(
         "-c",
         "--config",
-        default="./configs/config.json",
+        default="./logs/Yukong_zh/config.json",
         # default="./models/genshin/config.json",
         help="path of your config file",
     )
